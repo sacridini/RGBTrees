@@ -59,7 +59,7 @@ GDALDataset* ppr_calc(GDALDataset* in_ds, const char* output_filename)
 	out_ds->GetRasterBand(1)->SetNoDataValue(nodata);
 	out_ds->SetProjection(proj);
 
-	uint32_t* blue_row = (uint32_t*)CPLMalloc(sizeof(uint32_t)*ncols);
+	uint32_t* blue_row = (uint32_t*)CPLMalloc(sizeof(uint32_t)*ncols);  
 	uint32_t* green_row = (uint32_t*)CPLMalloc(sizeof(uint32_t)*ncols);
 	float* output_row = (float*)CPLMalloc(sizeof(float)*ncols);
 
@@ -225,6 +225,17 @@ bool process(const char* in_filename)
 
 	// Sum Indices
 	GDALDataset* sum = sum_indices(pvr_reclass, ppr_reclass, gli_reclass, "sum_idx.tif");
+
+
+	GDALClose(in_ds);
+	GDALClose(pvr_out_ds);
+	GDALClose(ppr_out_ds);
+	GDALClose(gli_out_ds);
+	GDALClose(pvr_reclass);
+	GDALClose(ppr_reclass);
+	GDALClose(gli_reclass);
+	GDALClose(sum);
+	GDALDestroyDriverManager();
 
 	return true;
 }
